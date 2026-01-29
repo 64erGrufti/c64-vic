@@ -1,0 +1,5 @@
+.idea/*
+requirements.txt
+dist/*
+build/*
+*.spec
