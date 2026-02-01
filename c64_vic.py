@@ -1,7 +1,7 @@
 import wx
 
 #https://c64.ch/programming/VICMCRC
-
+VERSION = '1.0'
 
 class VIC(wx.Frame):
     """
@@ -21,7 +21,7 @@ class VIC(wx.Frame):
         self.__charset.Select(2)
         self.__screen.Select(1)
         self.__comboSelected(None)
-        self.Title = 'C64 VIC Calculator'
+        self.Title = f'C64 VIC Calculator v{VERSION}'
         self.SetSize(wx.Size(300,220))
         self.Show(True)
 
