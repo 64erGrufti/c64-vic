@@ -4,9 +4,9 @@ import wx
 
 
 class VIC(wx.Frame):
-    '''
+    """
     Calculator for VIC-Values of the C64
-    '''
+    """
     def __init__(self, parent=None, style=0, *args, **kwargs):
         super(VIC, self).__init__(parent, style=wx.SYSTEM_MENU|wx.CAPTION|wx.CLOSE_BOX|style, *args, **kwargs)
         self.__initUI()
@@ -15,10 +15,10 @@ class VIC(wx.Frame):
         self.Show(True)
 
     def __initUI(self):
-        '''
+        """
         Fenster aufbauen
         :return:
-        '''
+        """
         topPanel = wx.Panel(self)
         sizer = wx.GridBagSizer(3, 3)
         row = 0
@@ -96,19 +96,19 @@ class VIC(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.__onExit)
 
     def __onExit(self, event):
-        '''
+        """
         What to do on closing the window
         :param event:
         :return:
-        '''
+        """
         self.Destroy()
 
     def __CheckText(self, event):
-        '''
+        """
         Eingabe in den Textboxen auf formelle Gültigkeit prüfen
         :param event:
         :return:
-        '''
+        """
         obj = event.GetEventObject()
         value = obj.GetValue()
         pos = obj.GetInsertionPoint()
@@ -136,27 +136,27 @@ class VIC(wx.Frame):
             self.bin2Combo()
 
     def __BankSelected(self, event):
-        '''
+        """
         Eventfunktion der Bankauswahl
         :param event:
         :return:
-        '''
+        """
         self.bank2Combo()
         self.bank2bits()
 
     def __comboSelected(self, event):
-        '''
+        """
         Eventfunktion der Comboboxen Bildschirm- und Charspeicher
         :param event:
         :return:
-        '''
+        """
         self.bank2bits()
 
     def bank2Combo(self):
-        '''
+        """
         Füllt die Comboboxen Screen- und Charspeicher aus der Bankauswahl
         :return:
-        '''
+        """
         self.__charset.Enable()
         self.__screen.Enable()
         self.__bin_d018.Enable()
@@ -239,11 +239,11 @@ class VIC(wx.Frame):
         self.__screen.SetSelection(screen)
 
     def bank2bits(self):
-        '''
+        """
         Berechnet die Binärwerte von DD00 und D018 aus den Comboboxen
         :param event:
         :return:
-        '''
+        """
         bits = (~self.__bank.GetSelection()) & 3
         self.__bin_dd00.ChangeValue(f'{bits:08b}')
 
@@ -260,10 +260,10 @@ class VIC(wx.Frame):
         self.bin2hex()
 
     def bin2hex(self):
-        '''
-        Wandelt die Binärwerte con DD00 und D018 in Hex um
+        """
+        Wandelt die Binärwerte von DD00 und D018 in Hex um
         :return:
-        '''
+        """
         dd00 = self.__bin_dd00.GetValue()
         if len(dd00) > 0:
             dd00 = int(dd00.lower().replace('x', '0'),2)
@@ -275,10 +275,10 @@ class VIC(wx.Frame):
             self.__hex_d018.ChangeValue(f'{d018:02X}')
 
     def hex2bin(self):
-        '''
+        """
         Wandelt die Hexwerte von DD00 und D018 in Binär um
         :return:
-        '''
+        """
         dd00 = self.__hex_dd00.GetValue()
         if len(dd00) > 0:
             dd00 = int(dd00.lower(),16)
@@ -290,10 +290,10 @@ class VIC(wx.Frame):
             self.__bin_d018.ChangeValue(f'{d018:08b}')
 
     def bin2Combo(self):
-        '''
+        """
         Berechnet die Combobox-Werte aus den Binärwerten von DD00 und D018
         :return:
-        '''
+        """
         dd00 = self.__bin_dd00.GetValue()
         if len(dd00) > 0:
             dd00 = int(dd00.lower().replace('x', '0'),2)
