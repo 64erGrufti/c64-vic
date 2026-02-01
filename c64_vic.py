@@ -16,6 +16,11 @@ class VIC(wx.Frame):
     def __init__(self, parent=None, style=0, *args, **kwargs):
         super(VIC, self).__init__(parent, style=wx.SYSTEM_MENU|wx.CAPTION|wx.CLOSE_BOX|style, *args, **kwargs)
         self.__initUI()
+        self.__bank.Select(0)
+        self.__BankSelected(None)
+        self.__charset.Select(2)
+        self.__screen.Select(1)
+        self.__comboSelected(None)
         self.Title = 'C64 VIC Calculator'
         self.SetSize(wx.Size(300,220))
         self.Show(True)
