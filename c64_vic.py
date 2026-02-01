@@ -7,6 +7,12 @@ class VIC(wx.Frame):
     """
     Calculator for VIC-Values of the C64
     """
+
+    __DEFAULT_DD00 = '10010111'
+    __DEFAULT_D018 = '00010101'
+    __MASK_DD00 = '00000011'
+    __MASK_D018 = '11111110'
+
     def __init__(self, parent=None, style=0, *args, **kwargs):
         super(VIC, self).__init__(parent, style=wx.SYSTEM_MENU|wx.CAPTION|wx.CLOSE_BOX|style, *args, **kwargs)
         self.__initUI()
@@ -257,7 +263,7 @@ class VIC(wx.Frame):
         :return:
         """
         bits = (~self.__bank.GetSelection()) & 3
-        self.__bin_dd00.ChangeValue(f'{bits:08b}')
+        self.__bin_dd00.ChangeValue(self.convertBits(f'{bits:08b}', self.__MASK_DD00, self.__DEFAULT_DD00))
 
         #Bildschirmspeicher
         screen = self.__screen.GetSelection() << 4
@@ -266,7 +272,7 @@ class VIC(wx.Frame):
         char = self.__charset.GetSelection() << 1
 
         d018 = screen | char
-        self.__bin_d018.ChangeValue(f'{d018:08b}')
+        self.__bin_d018.ChangeValue(self.convertBits(f'{d018:08b}',self.__MASK_D018, self.__DEFAULT_D018))
 
         #In Hex umwandeln
         self.bin2hex()
@@ -278,12 +284,12 @@ class VIC(wx.Frame):
         """
         dd00 = self.__bin_dd00.GetValue()
         if len(dd00) > 0:
-            dd00 = int(dd00.lower().replace('x', '0'),2)
+            dd00 = int(self.filterBits(dd00, self.__DEFAULT_DD00),2)
             self.__hex_dd00.ChangeValue(f'{dd00:02X}')
 
         d018 = self.__bin_d018.GetValue()
         if len(d018) > 0:
-            d018 = int(d018.lower().replace('x', '0'),2)
+            d018 = int(self.filterBits(d018, self.__DEFAULT_D018),2)
             self.__hex_d018.ChangeValue(f'{d018:02X}')
 
     def hex2bin(self):
@@ -294,12 +300,12 @@ class VIC(wx.Frame):
         dd00 = self.__hex_dd00.GetValue()
         if len(dd00) > 0:
             dd00 = int(dd00.lower(),16)
-            self.__bin_dd00.ChangeValue(f'{dd00:08b}')
+            self.__bin_dd00.ChangeValue(self.convertBits(f'{dd00:08b}', self.__MASK_DD00, self.__DEFAULT_DD00))
 
         d018 = self.__hex_d018.GetValue()
         if len(d018) > 0:
             d018 = int(d018.lower(),16)
-            self.__bin_d018.ChangeValue(f'{d018:08b}')
+            self.__bin_d018.ChangeValue(self.convertBits(f'{d018:08b}', self.__MASK_D018, self.__DEFAULT_D018))
 
     def bin2Combo(self):
         """
@@ -320,6 +326,37 @@ class VIC(wx.Frame):
             self.__screen.SetSelection(screen)
             charset = (d018 & 14) >> 1
             self.__charset.SetSelection(charset)
+
+    def convertBits(self, pattern: str, mask: str, default:str) -> str:
+        """
+        Bitwise:
+        If mask=0 -> X
+        If mask=1: If pattern is not X -> pattern
+                    If pattern is X -> default
+        :param pattern: Bits pattern (0,1,X)
+        :param mask: Bitmask (0,1)
+        :param default: Default values (0,1)
+        :return:
+        """
+        ret = ''
+        for p, m, d in zip(pattern, mask, default):
+            if m == '1':
+                if p.lower() != 'x':
+                    ret += p
+                else:
+                    ret += d
+            else:
+                ret += 'X'
+        return ret
+
+    def filterBits(self, bits: str, default:str) -> str:
+        """
+        Bitwise: X-Values to defaults
+        :param bits: Bits to be filtered
+        :param default: Default values
+        :return: Filtered bits
+        """
+        return ''.join([b if b.lower() != 'x' else d for b, d in zip(bits, default)])
 
 if __name__ == '__main__':
     app = wx.App()
