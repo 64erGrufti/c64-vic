@@ -28,6 +28,7 @@ class VIC(wx.Frame):
         sizer.Add(control, pos=(row, 0))
         self.__bank = wx.ComboBox(topPanel, choices=['$0000-$3FFF', '$4000-$7FFF', '$8000-$BFFF', '$C000-$FFFF'], name='comboBank', style=wx.CB_READONLY|wx.CB_DROPDOWN)
         self.__bank.Bind(wx.EVT_COMBOBOX, self.__BankSelected)
+        self.__bank.SetToolTip('Bank wählen')
         sizer.Add(self.__bank, pos=(row, 1), flag=wx.EXPAND, border=5)
         row += 1
 
@@ -37,6 +38,7 @@ class VIC(wx.Frame):
         self.__charset = wx.ComboBox(topPanel, choices=[], name='comboCharset', style=wx.CB_READONLY|wx.CB_DROPDOWN)
         self.__charset.Disable()
         self.__charset.Bind(wx.EVT_COMBOBOX, self.__comboSelected)
+        self.__charset.SetToolTip('Addresse, wo der Zeichensatz gesucht wird')
         sizer.Add(self.__charset, pos=(row, 1), flag=wx.EXPAND, border=5)
         row += 1
 
@@ -46,6 +48,7 @@ class VIC(wx.Frame):
         self.__screen = wx.ComboBox(topPanel, choices=[], name='comboScreen', style=wx.CB_READONLY|wx.CB_DROPDOWN)
         self.__screen.Disable()
         self.__screen.Bind(wx.EVT_COMBOBOX, self.__comboSelected)
+        self.__screen.SetToolTip('Addresse, wo der Bildschirmspeicher liegt')
         sizer.Add(self.__screen, pos=(row, 1), flag=wx.EXPAND, border=5)
         row += 1
 
@@ -58,11 +61,15 @@ class VIC(wx.Frame):
         self.__bin_dd00.Disable()
         self.__bin_dd00.SetMaxLength(8)
         self.__bin_dd00.Bind(wx.EVT_TEXT, self.__CheckText)
+        self.__bin_dd00.SetToolTip('Bitmuster, welches in DD00 steht\n'
+                                   'Bits, welche für andere Funktionen sind, werden mit X dargestellt')
         box.Add(self.__bin_dd00)
         self.__hex_dd00 = wx.TextCtrl(topPanel, name='hexDD00', size=wx.Size(30,-1))
         self.__hex_dd00.Disable()
         self.__hex_dd00.SetMaxLength(2)
         self.__hex_dd00.Bind(wx.EVT_TEXT, self.__CheckText)
+        self.__hex_dd00.SetToolTip('Hexadezimale Schreibweise, welche in DD00 steht.\n'
+                                   'X-Bits werden mit dem Standardwert versehen')
         box.Add(self.__hex_dd00)
         sizer.Add(box, pos=(row, 1))
         row += 1
@@ -76,11 +83,15 @@ class VIC(wx.Frame):
         self.__bin_d018.Disable()
         self.__bin_d018.SetMaxLength(8)
         self.__bin_d018.Bind(wx.EVT_TEXT, self.__CheckText)
+        self.__bin_d018.SetToolTip('Bitmuster, welches in D018 steht.\n'
+                                   'Bits, welche für andere Funktionen sind, werden mit X dargestellt')
         box.Add(self.__bin_d018)
         self.__hex_d018 = wx.TextCtrl(topPanel, name='hexD018', size=wx.Size(30,-1))
         self.__hex_d018.Disable()
         self.__hex_d018.SetMaxLength(2)
         self.__hex_d018.Bind(wx.EVT_TEXT, self.__CheckText)
+        self.__hex_d018.SetToolTip('Hexadezimale Schreibweise, welche in D018 steht.\n'
+                                   'X-Bits werden mit dem Standardwert versehen')
         box.Add(self.__hex_d018)
 
         sizer.Add(box, pos=(row, 1))
