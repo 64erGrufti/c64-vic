@@ -26,7 +26,8 @@ class VIC(wx.Frame):
         #Bank
         control = wx.StaticText(topPanel, -1, label='Bank:', name='lblBank')
         sizer.Add(control, pos=(row, 0))
-        self.__bank = wx.ComboBox(topPanel, choices=['$0000-$3FFF', '$4000-$7FFF', '$8000-$BFFF', '$C000-$FFFF'], name='comboBank', style=wx.CB_READONLY|wx.CB_DROPDOWN)
+        self.__bank = wx.ComboBox(topPanel, choices=['$0000-$3FFF', '$4000-$7FFF', '$8000-$BFFF', '$C000-$FFFF'],
+                                  name='comboBank', style=wx.CB_READONLY|wx.CB_DROPDOWN)
         self.__bank.Bind(wx.EVT_COMBOBOX, self.__BankSelected)
         self.__bank.SetToolTip('Bank wählen')
         sizer.Add(self.__bank, pos=(row, 1), flag=wx.EXPAND, border=5)
