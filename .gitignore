@@ -3,3 +3,4 @@ requirements.txt
 dist/*
 build/*
 *.spec
+build.cmd
