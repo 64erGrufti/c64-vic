@@ -22,7 +22,7 @@ class VIC(wx.Frame):
         self.__screen.Select(1)
         self.__comboSelected(None)
         self.Title = f'C64 VIC Calculator v{VERSION}'
-        self.SetSize(wx.Size(300,220))
+        self.SetSize(wx.Size(300,230))
         self.Show(True)
 
     def __initUI(self):
@@ -76,7 +76,7 @@ class VIC(wx.Frame):
         self.__bin_dd00.SetToolTip('Bitmuster, welches in DD00 steht\n'
                                    'Bits, welche für andere Funktionen sind, werden mit X dargestellt')
         box.Add(self.__bin_dd00)
-        self.__hex_dd00 = wx.TextCtrl(topPanel, name='hexDD00', size=wx.Size(30,-1))
+        self.__hex_dd00 = wx.TextCtrl(topPanel, name='hexDD00', size=wx.Size(35,-1))
         self.__hex_dd00.Disable()
         self.__hex_dd00.SetMaxLength(2)
         self.__hex_dd00.Bind(wx.EVT_TEXT, self.__CheckText)
@@ -98,7 +98,7 @@ class VIC(wx.Frame):
         self.__bin_d018.SetToolTip('Bitmuster, welches in D018 steht.\n'
                                    'Bits, welche für andere Funktionen sind, werden mit X dargestellt')
         box.Add(self.__bin_d018)
-        self.__hex_d018 = wx.TextCtrl(topPanel, name='hexD018', size=wx.Size(30,-1))
+        self.__hex_d018 = wx.TextCtrl(topPanel, name='hexD018', size=wx.Size(35,-1))
         self.__hex_d018.Disable()
         self.__hex_d018.SetMaxLength(2)
         self.__hex_d018.Bind(wx.EVT_TEXT, self.__CheckText)

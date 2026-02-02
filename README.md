@@ -33,5 +33,4 @@ installiert werden. Gestartet wird das Programm dann mit
 python c64_vic.py
 ```
 # Binaries
-Unter den Releases werden auch Binaries für Windows und Linux (derzeit habe ich mit dem Kompilieren unter Linux noch
-Probleme) bereit gestellt.
+Unter den Releases werden auch Binaries für Windows und Linux bereit gestellt.
